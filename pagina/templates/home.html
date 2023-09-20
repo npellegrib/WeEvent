@@ -50,34 +50,31 @@
     </style>
 </head>
 <body>
-        <div class="container">
-            
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-primary">Mapa</button>
-                    <button type="button" class="btn btn-primary">Calendario</button>
-                </div>
-                <img class="rounded img-thumbnail blurable-image border-black" width="340" height="280"  alt="imagen1" src="https://cdn.discordapp.com/attachments/1073616258223833089/1153852161118187643/image.png" alt="Imagen Grande" > 
-                <div class="event-container">
-                    <h2>Próximos Eventos</h2>
-                    {% for event in events %}
-                    <div class="event-box">
-                        
-                        <div class="event-row">
-                            
-                            <div class="event">
-                                <h3>{{ event.nombre }}</h3>
-                                <img src="{{ event.image_url }}" alt="Evento 1" class="img-fluid" >
-                                
-                            </div>
-                        </div>
-                        
-                    </div>
-                    {% endfor %}
-                       
-
-                </div>
-            
+    <div class="container" style="position: relative;">
+        <div class="btn-group" role="group" aria-label="Basic example" style="position: absolute; top: 10px; left: 10px;">
+            <button type="button" class="btn btn-primary">Mapa</button>
+            <button type="button" class="btn btn-primary">Calendario</button>
         </div>
+        <img class="rounded img-thumbnail blurable-image border-black" width="340" height="280" alt="imagen1" src="https://cdn.discordapp.com/attachments/1073616258223833089/1153852161118187643/image.png" alt="Imagen Grande" style="margin-top: -560px">
+        <div class="event-container">
+            <h2>Próximos Eventos</h2>
+            <div class="event-box">
+                {% for event in events %}
+                {% if forloop.counter0|divisibleby:2 %}
+                <div class="event-row">
+                {% endif %}
+                    <div class="event">
+                        <h3>{{ event.nombre }}</h3>
+                        <img src="{{ event.image_url }}" alt="Evento 1" class="img-fluid">
+                    </div>
+                {% if forloop.counter|divisibleby:2 or forloop.last %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>          
           
 </body>
 {% endblock %}
