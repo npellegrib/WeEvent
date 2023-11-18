@@ -31,6 +31,11 @@
             <a class="nav-link " href="{% url 'create_event' %}">Crear Eventos</a>
           </li>
           {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_events' %}">Mis Eventos</a>
+            </li>
+        {% endif %}
+          {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
                 </li>

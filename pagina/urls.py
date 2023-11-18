@@ -11,4 +11,6 @@ urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('signup/', user_signup, name='user_signup'),
+    path('edit_event/<int:id>/', EditEventView.as_view(), name='edit_event'),
+    path('user_events/', UserEventsView.as_view(), name='user_events'),
 ]

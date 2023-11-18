@@ -42,6 +42,22 @@ class EventShowView(View):
         
         return render(request, self.template_name, viewData)
 
+class EditEventView(View):
+    template_name = 'edit_event.html'
+
+    def get(self, request, id):
+        evento = get_object_or_404(Evento, id=id)
+        form = EventoForm(instance=evento)
+        return render(request, self.template_name, {'form': form, 'evento': evento})
+
+    def post(self, request, id):
+        evento = get_object_or_404(Evento, id=id)
+        form = EventoForm(request.POST, instance=evento)
+        if form.is_valid():
+            form.save()
+            return redirect('show_event', id=evento.id)
+        return render(request, self.template_name, {'form': form, 'evento': evento})
+
 class CreateEventView(LoginRequiredMixin, View):
     template_name = 'create_event.html'
     login_url = '/login/' 
@@ -95,3 +111,10 @@ def user_signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+class UserEventsView(View):
+    template_name = 'user_events.html'
+
+    def get(self, request):
+        user_events = Evento.objects.filter(organizador=request.user)
+        return render(request, self.template_name, {'user_events': user_events})
