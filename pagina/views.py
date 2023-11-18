@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import TemplateView
 from django.views import View
@@ -42,16 +43,27 @@ class EventShowView(View):
         
         return render(request, self.template_name, viewData)
 
+@method_decorator(login_required, name='dispatch')
 class EditEventView(View):
     template_name = 'edit_event.html'
 
     def get(self, request, id):
         evento = get_object_or_404(Evento, id=id)
+        
+        # Verificar si el usuario actual es el organizador del evento
+        if request.user != evento.organizador:
+            return redirect('events_index')
+        
         form = EventoForm(instance=evento)
         return render(request, self.template_name, {'form': form, 'evento': evento})
 
     def post(self, request, id):
         evento = get_object_or_404(Evento, id=id)
+        
+        # Verificar si el usuario actual es el organizador del evento
+        if request.user != evento.organizador:
+            return redirect('events_index')
+        
         form = EventoForm(request.POST, instance=evento)
         if form.is_valid():
             form.save()
