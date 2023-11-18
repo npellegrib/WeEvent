@@ -8,4 +8,7 @@ urlpatterns = [
     path('events/<int:id>',EventShowView.as_view(),name='show_event'),
     path('create_event/', CreateEventView.as_view(), name='create_event'),
     path('delete_event/<int:id>/', DeleteEventView.as_view(), name='delete_event'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
+    path('signup/', user_signup, name='user_signup'),
 ]
