@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import TemplateView
 from django.views import View
@@ -32,16 +33,42 @@ class EventIndexView(TemplateView):
 
         return render(request, self.template_name, viewData)
     
+# class EventShowView(View):
+#     template_name = 'show_event.html'
+
+#     def get(self, request, id):
+#         viewData = {}
+#         viewData["title"] = "Title of the view"
+#         viewData["subtitle"] =  "Subtitle of the view"
+#         viewData["event"] = get_object_or_404(Evento,pk=id)
+        
+#         return render(request, self.template_name, viewData)
+
 class EventShowView(View):
     template_name = 'show_event.html'
 
     def get(self, request, id):
-        viewData = {}
-        viewData["title"] = "Title of the view"
-        viewData["subtitle"] =  "Subtitle of the view"
-        viewData["event"] = get_object_or_404(Evento,pk=id)
+        view_data = {}
+        view_data["event"] = get_object_or_404(Evento, pk=id)
+        view_data["comentario_form"] = ComentarioForm()
+        view_data["comentarios"] = Comentario.objects.filter(evento=view_data["event"])
         
-        return render(request, self.template_name, viewData)
+        return render(request, self.template_name, view_data)
+
+    def post(self, request, id):
+        event = get_object_or_404(Evento, pk=id)
+        form = ComentarioForm(request.POST)
+
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.evento = event
+            comentario.usuario = request.user
+            comentario.save()
+            messages.success(request, 'Comentario agregado con éxito.')
+        else:
+            messages.error(request, 'Error al agregar el comentario. Por favor, verifica el formulario.')
+
+        return redirect('show_event', id=id)
 
 @method_decorator(login_required, name='dispatch')
 class EditEventView(View):

@@ -24,6 +24,24 @@
               
               <a class="btn bg-primary text-white" href="{% url 'events_index' %}">Go back</a>
               <a href="{% url 'delete_event' event.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar este evento?')">Eliminar</a>
+
+              <div class="card-body">
+                <h4 class="card-title">Comentarios</h4>
+                {% for comentario in comentarios %}
+                    <p>{{ comentario.usuario.username }} dijo: {{ comentario.texto }}</p>
+                {% endfor %}
+                
+                <!-- Formulario para agregar comentarios -->
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'show_event' id=event.id %}">
+                        {% csrf_token %}
+                        {{ comentario_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Agregar Comentario</button>
+                    </form>
+                {% else %}
+                    <p>Inicia sesión para agregar un comentario.</p>
+                {% endif %}
+            </div>
         </div>
       </div>
     </div>

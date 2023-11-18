@@ -1,5 +1,5 @@
 from django import forms
-from .models import Evento
+from .models import *
 
 class EventoForm(forms.ModelForm):
     class Meta:
@@ -99,3 +99,10 @@ class EventoForm(forms.ModelForm):
         self.fields['esDestacado'].label = '¿El evento es destacado?'
 
 
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['texto']
+        widgets = {
+            'texto': forms.Textarea(attrs={'rows': 3}),
+        }

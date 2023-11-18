@@ -39,13 +39,13 @@ class Evento(models.Model):
         pass
 
 class Comentario(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     texto = models.TextField()
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.texto
+        return f'Comentario por {self.usuario.username} en {self.evento.nombre}'
 
     
 
