@@ -114,13 +114,26 @@ class CreateEventView(LoginRequiredMixin, View):
             return redirect('show_event', id=evento.id)
         return render(request, self.template_name, {'form': form})
 
+# class DeleteEventView(View):
+#     @login_required(login_url='/login/') 
+#     def get(self, request, id):
+#         evento = get_object_or_404(Evento, id=id)
+#         evento.delete()
+#         return redirect('events_index')
+
+@method_decorator(login_required, name='dispatch')
 class DeleteEventView(View):
-    @login_required(login_url='/login/') 
     def get(self, request, id):
         evento = get_object_or_404(Evento, id=id)
-        evento.delete()
-        return redirect('events_index')
 
+        # Verificar si el usuario actual es el creador del evento
+        if request.user == evento.organizador:
+            evento.delete()
+            messages.success(request, 'Evento eliminado con éxito.')
+        else:
+            messages.error(request, 'No tienes permisos para eliminar este evento.')
+
+        return redirect('events_index')
 
 def user_login(request):
     if request.method == 'POST':

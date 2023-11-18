@@ -23,8 +23,15 @@
               <p class="card-text">Asistencia: {{event.asistencia}}</p>
               
               <a class="btn bg-primary text-white" href="{% url 'events_index' %}">Go back</a>
-              <a href="{% url 'delete_event' event.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar este evento?')">Eliminar</a>
-
+              <div class="card-body">
+                <h4 class="card-title">Acciones</h4>
+                {% if user.is_authenticated %}
+                    {% if user == event.organizador %}
+                        <a class="btn btn-warning" href="{% url 'edit_event' id=event.id %}">Editar</a>
+                        <a class="btn btn-danger" href="{% url 'delete_event' id=event.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar este evento?')">Eliminar</a>
+                    {% endif %}
+                {% endif %}
+              </div>
               <div class="card-body">
                 <h4 class="card-title">Comentarios</h4>
                 {% for comentario in comentarios %}
