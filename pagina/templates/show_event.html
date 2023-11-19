@@ -33,6 +33,19 @@
                 {% endif %}
               </div>
               <div class="card-body">
+                <h4 class="card-title">Me gusta</h4>
+                <p>{{ event.like_set.count }} personas les gusta este evento</p>
+                {% if user.is_authenticated %}
+                    <a class="btn btn-primary" href="{% url 'like_event' id=event.id %}">
+                        {% if user in event.like_set.all %}
+                            No me gusta
+                        {% else %}
+                            Me gusta
+                        {% endif %}
+                    </a>
+                {% endif %}
+              </div>
+              <div class="card-body">
                 <h4 class="card-title">Comentarios</h4>
                 {% for comentario in comentarios %}
                     <p>{{ comentario.usuario.username }} dijo: {{ comentario.texto }}</p>

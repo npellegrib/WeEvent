@@ -46,8 +46,12 @@ class Comentario(models.Model):
 
     def __str__(self):
         return f'Comentario por {self.usuario.username} en {self.evento.nombre}'
-
     
 
-    
-    
+class Like(models.Model):
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.usuario.username} le gusta {self.evento.nombre}'
+

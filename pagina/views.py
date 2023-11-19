@@ -32,17 +32,7 @@ class EventIndexView(TemplateView):
         viewData["events"] = Evento.objects.all()
 
         return render(request, self.template_name, viewData)
-    
-# class EventShowView(View):
-#     template_name = 'show_event.html'
 
-#     def get(self, request, id):
-#         viewData = {}
-#         viewData["title"] = "Title of the view"
-#         viewData["subtitle"] =  "Subtitle of the view"
-#         viewData["event"] = get_object_or_404(Evento,pk=id)
-        
-#         return render(request, self.template_name, viewData)
 
 class EventShowView(View):
     template_name = 'show_event.html'
@@ -67,6 +57,22 @@ class EventShowView(View):
             messages.success(request, 'Comentario agregado con éxito.')
         else:
             messages.error(request, 'Error al agregar el comentario. Por favor, verifica el formulario.')
+
+        return redirect('show_event', id=id)
+    
+class LikeEventView(View):
+    def get(self, request, id):
+        evento = get_object_or_404(Evento, id=id)
+
+        # Verifica si el usuario ya dio "Me gusta" al evento
+        like, created = Like.objects.get_or_create(evento=evento, usuario=request.user)
+
+        if not created:
+            # Si ya dio "Me gusta", elimina el "Me gusta"
+            like.delete()
+        else:
+            # Si no ha dado "Me gusta", crea el "Me gusta"
+            Like.objects.create(evento=evento, usuario=request.user)
 
         return redirect('show_event', id=id)
 
@@ -114,12 +120,6 @@ class CreateEventView(LoginRequiredMixin, View):
             return redirect('show_event', id=evento.id)
         return render(request, self.template_name, {'form': form})
 
-# class DeleteEventView(View):
-#     @login_required(login_url='/login/') 
-#     def get(self, request, id):
-#         evento = get_object_or_404(Evento, id=id)
-#         evento.delete()
-#         return redirect('events_index')
 
 @method_decorator(login_required, name='dispatch')
 class DeleteEventView(View):
