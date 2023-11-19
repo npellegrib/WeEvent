@@ -16,11 +16,11 @@ class Evento(models.Model):
     asistencia = models.IntegerField()
     categorias = models.CharField(max_length=255)
     etiquetas = models.CharField(max_length=255)
-    esRecurrente = models.BooleanField()
     reservas = models.ManyToManyField(User, related_name='reservas')
     calificacion = models.FloatField()
+    puntuacion = models.FloatField(default=0)
     # comentarios = models.ManyToManyField(User, through='Comentario')
-    esDestacado = models.BooleanField()
+
 
     def actualizarEvento(self):
         # Lógica para actualizar el evento

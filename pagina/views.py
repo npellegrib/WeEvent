@@ -65,14 +65,18 @@ class LikeEventView(View):
         evento = get_object_or_404(Evento, id=id)
 
         # Verifica si el usuario ya dio "Me gusta" al evento
-        like, created = Like.objects.get_or_create(evento=evento, usuario=request.user)
+        existing_like = Like.objects.filter(evento=evento, usuario=request.user).first()
 
-        if not created:
+        if existing_like:
             # Si ya dio "Me gusta", elimina el "Me gusta"
-            like.delete()
+            existing_like.delete()
+            evento.puntuacion -= 1  # Resta 1 a la puntuación
         else:
             # Si no ha dado "Me gusta", crea el "Me gusta"
             Like.objects.create(evento=evento, usuario=request.user)
+            evento.puntuacion += 1  # Suma 1 a la puntuación
+
+        evento.save()  # Guarda la actualización de la puntuación
 
         return redirect('show_event', id=id)
 
