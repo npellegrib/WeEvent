@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} {{event.name}} info {% endblock %}
 {% block header_title %} {{subtitle}} {% endblock %}
 {% block content %}
 <div class="card mb-3">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="{{ event.image_url }}" class="card-img-top"  alt="Event Image">
+        <img src="{{ event.imagen.url }}" class="card-img-top"  alt="Event Image">
 
       </div>
       <div class="col-md-8">

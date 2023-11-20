@@ -107,21 +107,42 @@ class EditEventView(View):
             return redirect('show_event', id=evento.id)
         return render(request, self.template_name, {'form': form, 'evento': evento})
 
+# class CreateEventView(LoginRequiredMixin, View):
+#     template_name = 'create_event.html'
+#     login_url = '/login/' 
+
+#     def get(self, request):
+#         form = EventoForm()
+#         return render(request, self.template_name, {'form': form})
+
+#     def post(self, request):
+#         form = EventoForm(request.POST)
+#         if form.is_valid():
+#             evento = form.save(commit=False)
+#             evento.organizador = request.user 
+#             evento.save()
+#             return redirect('show_event', id=evento.id)
+#         return render(request, self.template_name, {'form': form})
+
 class CreateEventView(LoginRequiredMixin, View):
     template_name = 'create_event.html'
-    login_url = '/login/' 
+    login_url = '/login/'
 
     def get(self, request):
         form = EventoForm()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        form = EventoForm(request.POST)
+        form = EventoForm(request.POST, request.FILES)
         if form.is_valid():
             evento = form.save(commit=False)
-            evento.organizador = request.user 
+            evento.organizador = request.user  # Asigna el organizador correctamente
             evento.save()
+            messages.success(request, 'Evento creado con éxito.')
             return redirect('show_event', id=evento.id)
+        else:
+            messages.error(request, 'Error al crear el evento. Por favor, verifica el formulario.')
+
         return render(request, self.template_name, {'form': form})
 
 

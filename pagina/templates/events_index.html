@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Events {% endblock %}
 {% block header_title %} {{subtitle}} {% endblock %}
 {% block content %}
@@ -6,10 +7,11 @@
     {% for event in events %}
         <div class="col-md-4 col-lg-3 mb-2">
             <div class="card">
-                <img src="{{ event.image_url }}" class="card-img-top" style="height: 300px;" alt="Event Image">
+                
+                <img src="{{ event.imagen.url }}" class="card-img-top" style="height: 300px;" alt="Event Image">
+
                 <div class="card-body">
-                    <h5 class="card-title">Nombre: </h5>
-                    <p class="card-text">{{ event.nombre }}</p>
+                    <h3 class="card-title">{{ event.nombre }}</h3>
                     <h5 class="card-title">Fecha: </h5>
                     <p class="card-text">{{ event.fechaInicio }}</p>
                     <h5 class="card-title">Precio: </h5>
