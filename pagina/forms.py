@@ -2,6 +2,27 @@ from django import forms
 from .models import *
 
 class EventoForm(forms.ModelForm):
+
+    CATEGORIES_CHOICES = [
+        ('', 'Selecciona una categoría'),
+        ('Cultura', 'Cultura'),
+        ('Fiesta', 'Fiesta'),
+        ('Tecnología', 'Tecnología'),
+        ('Feria', 'Feria'),
+        ('Evento', 'Evento'),
+        ('Conferencia', 'Conferencia'),
+        ('Concierto', 'Concierto'),
+        ('Deporte', 'Deporte'),
+        ('Taller', 'Taller'),
+        ('Exposición', 'Exposición'),
+        ('Actividad', 'Actividad'),
+        ('Gastronomía', 'Gastronomía'),
+        ('Networking', 'Networking'),
+        ('Celebración', 'Celebración'),
+        ('Caridad', 'Caridad'),
+        ('Teatro', 'Teatro'),
+        ('Reunión temática', 'Reunión temática'),
+    ]
     class Meta:
         model = Evento
         fields = ['nombre', 'ubicacion', 'fechaInicio', 'fechaFin', 'descripcion', 'precio', 'capacidad', 'categorias', 'etiquetas', 'imagen']
@@ -17,7 +38,7 @@ class EventoForm(forms.ModelForm):
         self.fields['descripcion'].required = False
         self.fields['precio'].required = False
         self.fields['capacidad'].required = False
-        self.fields['categorias'].required = False
+        self.fields['categorias'] = forms.ChoiceField(choices=self.CATEGORIES_CHOICES, required=True)
         self.fields['etiquetas'].required = False
 
         self.fields['nombre'].widget.attrs.update({
