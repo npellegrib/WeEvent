@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'WeEvent.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'D-**b3B6-b6BcdDdC164*eccdcfc*bE4',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '32380',
     }
 }
 
