@@ -4,7 +4,6 @@ from .models import *
 class EventoForm(forms.ModelForm):
 
     CATEGORIES_CHOICES = [
-        ('', 'Selecciona una categoría'),
         ('Cultura', 'Cultura'),
         ('Fiesta', 'Fiesta'),
         ('Tecnología', 'Tecnología'),

@@ -17,7 +17,7 @@ TEST_ALL_EVENTS = [
     {'id': '14', 'name': 'Evento 14', 'category': 'Deporte'},
     {'id': '15', 'name': 'Evento 15', 'category': 'Conferencia'},
     {'id': '16', 'name': 'Evento 16', 'category': 'Cultura'},
-    {'id': '17', 'name': 'Evento 17', 'category': 'Fiesta'},
+    {'id': '17', 'name': 'Evento 17', 'category': 'Cultura'},
     {'id': '18', 'name': 'Evento 18', 'category': 'Tecnología'},
     {'id': '19', 'name': 'Evento 19', 'category': 'Deporte'},
     {'id': '20', 'name': 'Evento 20', 'category': 'Conferencia'}
@@ -25,12 +25,12 @@ TEST_ALL_EVENTS = [
 
 
 TEST_EVENTS_LIKES = [
-    {'id': '1'},
-    {'id': '6'},
-    {'id': '11'},
-    {'id': '19'},
-    {'id': '14'},
-    {'id': '9'}
+    {'id': '1'}, #cultura
+    {'id': '6'}, #cultura
+    {'id': '11'}, #cultura
+    {'id': '19'}, #deporte
+    {'id': '14'}, #deporte
+    {'id': '9'} #deporte
 ]
 
 def do_recomendation(userLikedEvents: dict, allEvents: dict) -> dict:
@@ -60,4 +60,4 @@ def do_recomendation(userLikedEvents: dict, allEvents: dict) -> dict:
         else:
             return {'error':'an error has ocurred'}
 
-print(do_recomendation(TEST_EVENTS_LIKES, TEST_ALL_EVENTS))
+# print(do_recomendation(TEST_EVENTS_LIKES, TEST_ALL_EVENTS))
