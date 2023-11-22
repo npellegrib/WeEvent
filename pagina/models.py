@@ -20,23 +20,6 @@ class Evento(models.Model):
     puntuacion = models.FloatField(default=0)
     # comentarios = models.ManyToManyField(User, through='Comentario')
 
-
-    def actualizarEvento(self):
-        # Lógica para actualizar el evento
-        pass
-
-    def crearEvento(self):
-        # Lógica para crear un nuevo evento
-        pass
-
-    def eliminarEvento(self):
-        # Lógica para eliminar el evento
-        pass
-
-    def reservar(self, usuario):
-        # Lógica para permitir que un usuario haga una reserva en el evento
-        pass
-
 class Comentario(models.Model):
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)

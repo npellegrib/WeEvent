@@ -35,13 +35,13 @@
 
     .text-column {
       width: 60%;
-      
+
     }
 
     .info-section{
       margin-top: 90px;
       text-align: center;
-      
+
     }
 
     .description-section{
@@ -64,7 +64,7 @@
     .info-section .detalle{
       margin-top: 25px;
       font-family: Verdana, Geneva, serif, sans-serif;
-      
+
 
     }
 
@@ -75,9 +75,9 @@
 
     .comentario {
       height: 65px;
-      overflow-y:auto ; 
+      overflow-y:auto ;
       font-family: monospace;
-      
+
     }
     .heart-symbol {
       color: red; /* Color rojo */
@@ -105,7 +105,7 @@
             <p>{{ comentario.usuario.username }}: {{ comentario.texto }}</p>
           {% endfor %}
         </div>
-        
+
         <!-- Formulario para agregar comentarios -->
         {% if user.is_authenticated %}
           <form method="post" action="{% url 'show_event' id=event.id %}">
