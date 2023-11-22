@@ -1,6 +1,6 @@
 from random import sample
 
-def do_recomendation(userLikedEvents: dict, allEvents: dict, isAuth: bool) -> dict:
+def do_recomendation(userLikedEvents, allEvents, isAuth: bool) -> dict:
     categoryCounter = {}
 
     if isAuth is True:

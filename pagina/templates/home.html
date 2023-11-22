@@ -98,7 +98,7 @@
             <div class="event-section">
                 <h2 class="text-center1">Recomendados</h2>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    {% for event in events|slice:":3" %}
+                    {% for event in recomendations|slice:":3" %}
                         <div class="col">
                             <div class="card text-center event-card">
                                 <a href="{% url 'show_event' id=event.id %}">
