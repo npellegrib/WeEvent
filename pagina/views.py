@@ -16,6 +16,7 @@ class HomePage(TemplateView):
     def get(self, request):
         event_with_likes = []
         id_name_events = []
+        values = []
         view_data = {}
         if request.user.is_authenticated:
             user_likes = Like.objects.filter(usuario=request.user)
@@ -30,11 +31,19 @@ class HomePage(TemplateView):
                 id_name_events.append({'id':event['id'], 'name':event['nombre'], 'category':event['categorias']})
 
             recomendations = do_recomendation(event_with_likes, id_name_events, True)
-            view_data['recomendations'] = recomendations
+            for recomendation in recomendations:
+                values.append(recomendation['id'])
+            filtered_events = Evento.objects.filter(id__in=values)
+            view_data['recomendations'] = filtered_events
+
             return render(request, self.template_name, view_data)
         else:
             recomendations = do_recomendation(event_with_likes, id_name_events, False)
-            view_data['recomendations'] = recomendations
+            for recomendation in recomendations:
+                values.append(recomendation['id'])
+            filtered_events = Evento.objects.filter(id__in=values)
+            view_data['recomendations'] = filtered_events
+
             return render(request, self.template_name, view_data)
 
 class EventIndexView(TemplateView):
