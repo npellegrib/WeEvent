@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-%%2xmu&n7+tft1!_*h%iwyfze@5n%hr^!70q55q8pmnh!18io_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -139,3 +139,4 @@ LOGIN_REDIRECT_URL = 'home'
 
 STATIC_URL = 'pagina/static/pagina/'
 STATICFILES_DIRS = [BASE_DIR / "pagina/static/pagina/"]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
