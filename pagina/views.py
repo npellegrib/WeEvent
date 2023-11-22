@@ -18,6 +18,12 @@ class HomePage(TemplateView):
         id_name_events = []
         values = []
         view_data = {}
+
+        all_events1 = Evento.objects.all().order_by('-id')[:3]
+        view_data['latest'] = all_events1
+        print(all_events1)
+        
+        
         if request.user.is_authenticated:
             user_likes = Like.objects.filter(usuario=request.user)
             user_likes = list(user_likes.values())
