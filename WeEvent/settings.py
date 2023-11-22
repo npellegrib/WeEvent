@@ -53,8 +53,10 @@ MIDDLEWARE = [
         'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = [
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOWED_ORIGINS = [
     "https://weevent-production.up.railway.app",
+    # Otros orígenes permitidos
 ]
 
 ROOT_URLCONF = 'WeEvent.urls'
