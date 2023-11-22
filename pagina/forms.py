@@ -2,9 +2,29 @@ from django import forms
 from .models import *
 
 class EventoForm(forms.ModelForm):
+
+    CATEGORIES_CHOICES = [
+        ('Cultura', 'Cultura'),
+        ('Fiesta', 'Fiesta'),
+        ('Tecnología', 'Tecnología'),
+        ('Feria', 'Feria'),
+        ('Evento', 'Evento'),
+        ('Conferencia', 'Conferencia'),
+        ('Concierto', 'Concierto'),
+        ('Deporte', 'Deporte'),
+        ('Taller', 'Taller'),
+        ('Exposición', 'Exposición'),
+        ('Actividad', 'Actividad'),
+        ('Gastronomía', 'Gastronomía'),
+        ('Networking', 'Networking'),
+        ('Celebración', 'Celebración'),
+        ('Caridad', 'Caridad'),
+        ('Teatro', 'Teatro'),
+        ('Reunión temática', 'Reunión temática'),
+    ]
     class Meta:
         model = Evento
-        fields = '__all__'
+        fields = ['nombre', 'ubicacion', 'fechaInicio', 'fechaFin', 'descripcion', 'precio', 'capacidad', 'categorias', 'etiquetas', 'imagen']
 
     def __init__(self, *args, **kwargs):
         super(EventoForm, self).__init__(*args, **kwargs)
@@ -14,19 +34,11 @@ class EventoForm(forms.ModelForm):
         self.fields['ubicacion'].required = True
         self.fields['fechaInicio'].required = True
         self.fields['fechaFin'].required = False
-        self.fields['organizador'].required = False
         self.fields['descripcion'].required = False
-        self.fields['image_url'].required = False
-        self.fields['videos'].required = False
         self.fields['precio'].required = False
         self.fields['capacidad'].required = False
-        self.fields['asistencia'].required = False
-        self.fields['categorias'].required = False
+        self.fields['categorias'] = forms.ChoiceField(choices=self.CATEGORIES_CHOICES, required=True)
         self.fields['etiquetas'].required = False
-        self.fields['esRecurrente'].required = False
-        self.fields['reservas'].required = False
-        self.fields['calificacion'].required = False
-        self.fields['esDestacado'].required = False
 
         self.fields['nombre'].widget.attrs.update({
             'class': 'form-control',
@@ -44,21 +56,9 @@ class EventoForm(forms.ModelForm):
             'class': 'form-control datepicker',
             'placeholder': 'Fecha de finalización (YYYY-MM-DD)'
         })
-        self.fields['organizador'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Organizador del evento'
-        })
         self.fields['descripcion'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Descripción del evento'
-        })
-        self.fields['image_url'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'URL de la imagen del evento (https://www.imagen...)'
-        })
-        self.fields['videos'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'URL del video del evento (https://www.video...)'
         })
         self.fields['precio'].widget.attrs.update({
             'class': 'form-control',
@@ -68,10 +68,6 @@ class EventoForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': 'Capacidad del evento'
         })
-        self.fields['asistencia'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Asistencia confirmada del evento'
-        })
         self.fields['categorias'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Categorías del evento'
@@ -80,23 +76,10 @@ class EventoForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': 'Etiquetas del evento'
         })
-        self.fields['esRecurrente'].widget.attrs.update({
-            'class': 'form-check-input',
-        })
-        self.fields['esRecurrente'].label = '¿El evento es recurrente?'
-
-        self.fields['reservas'].widget.attrs.update({
+        self.fields['imagen'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Reservación del evento'
+            'placeholder': 'Sube una imagen del evento'
         })
-        self.fields['calificacion'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Calificación del evento'
-        })
-        self.fields['esDestacado'].widget.attrs.update({
-            'class': 'form-check-input',
-        })
-        self.fields['esDestacado'].label = '¿El evento es destacado?'
 
 
 class ComentarioForm(forms.ModelForm):

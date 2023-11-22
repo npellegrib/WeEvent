@@ -9,18 +9,17 @@ class Evento(models.Model):
     fechaFin = models.DateField()
     organizador = models.ForeignKey(User, on_delete=models.CASCADE)
     descripcion = models.TextField()
-    image_url = models.URLField()
+    imagen = models.ImageField(upload_to='pagina/static/pagina/event_images/', null=True, blank=True)
     videos = models.URLField()
     precio = models.FloatField()
     capacidad = models.IntegerField()
-    asistencia = models.IntegerField()
+    asistencia = models.IntegerField(default=0)
     categorias = models.CharField(max_length=255)
     etiquetas = models.CharField(max_length=255)
-    esRecurrente = models.BooleanField()
-    reservas = models.ManyToManyField(User, related_name='reservas')
-    calificacion = models.FloatField()
+    calificacion = models.IntegerField(default=0)
+    puntuacion = models.FloatField(default=0)
     # comentarios = models.ManyToManyField(User, through='Comentario')
-    esDestacado = models.BooleanField()
+
 
     def actualizarEvento(self):
         # Lógica para actualizar el evento
