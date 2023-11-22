@@ -17,20 +17,23 @@ class HomePage(TemplateView):
         event_with_likes = []
         id_name_events = []
 
-        user_likes = Like.objects.filter(usuario=request.user)
-        user_likes = list(user_likes.values())
-        for liked_events in user_likes:
-            event_with_likes.append({'id':liked_events['evento_id']})
+        if request.user.is_authenticated:
+            user_likes = Like.objects.filter(usuario=request.user)
+            user_likes = list(user_likes.values())
+            for liked_events in user_likes:
+                event_with_likes.append({'id':liked_events['evento_id']})
 
-        all_events = Evento.objects.all()
-        all_events = list(all_events.values())
+            all_events = Evento.objects.all()
+            all_events = list(all_events.values())
 
-        for event in all_events:
-            id_name_events.append({'id':event['id'], 'name':event['nombre'], 'category':event['categorias']})
+            for event in all_events:
+                id_name_events.append({'id':event['id'], 'name':event['nombre'], 'category':event['categorias']})
 
-        recomendations = do_recomendation(event_with_likes, id_name_events)
-        return render(request, self.template_name, recomendations)
-
+            recomendations = do_recomendation(event_with_likes, id_name_events, True)
+            return render(request, self.template_name, recomendations)
+        else:
+            recomendations = do_recomendation(event_with_likes, id_name_events, False)
+            return render(request, self.template_name, recomendations)
 
 class EventIndexView(TemplateView):
     template_name = 'events_index.html'
