@@ -153,5 +153,7 @@ LOGIN_REDIRECT_URL = 'home'
 STATIC_URL = 'pagina/static/pagina/'
 STATICFILES_DIRS = [BASE_DIR / "pagina/static/pagina/"]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
