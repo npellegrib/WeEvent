@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pagina.apps.PaginaConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ORIGIN_ALLOW_ALL = [
+    "https://weevent-production.up.railway.app",
 ]
 
 ROOT_URLCONF = 'WeEvent.urls'
@@ -140,3 +146,5 @@ LOGIN_REDIRECT_URL = 'home'
 STATIC_URL = 'pagina/static/pagina/'
 STATICFILES_DIRS = [BASE_DIR / "pagina/static/pagina/"]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+
