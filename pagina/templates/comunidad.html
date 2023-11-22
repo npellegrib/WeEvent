@@ -113,7 +113,7 @@
                 <div class="comment">
                     <div class="user-info">
                         <div class="image-container">
-                            <a href="{% url 'show_event' id=comentario.evento.id %}" target="_blank"><img src="{{ comentario.evento.image_url }}" class="image" alt="Imagen de perfil comment"></a>
+                            <a href="{% url 'show_event' id=comentario.evento.id %}" target="_blank"><img src="{{ comentario.evento.imagen.url }}" class="image" alt="Imagen de perfil comment"></a>
                             <div class="text">{{ comentario.evento.nombre }}</div>
                         </div>
                         <div>
@@ -132,7 +132,7 @@
                     <div class="username">{{ like.usuario.username }}</div>
                     <div class="heart-icon">&hearts;</div>
                     <a href="{% url 'show_event' id=like.evento.id %}" class="image-evento" target="_blank">
-                      <img src="{{ like.evento.image_url }}" alt="Imagen de perfil like" class="image">
+                      <img src="{{ like.evento.imagen.url }}" alt="Imagen de perfil like" class="image">
                     </a>
                     <br>
                 </div>
