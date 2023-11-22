@@ -38,13 +38,12 @@
     .text-column {
       width: 60%;
       display: flex;
-      flex-direction: column;
+      flex-direction: column; /* Cambiado a columna para apilar elementos verticalmente */
     }
 
     .info-section {
       margin-top: 20px;
       text-align: center;
-      
     }
 
     .description-section {
@@ -61,13 +60,13 @@
     .number-section,
     .count-section {
       text-align: center;
-      width: 48%;
+      width: 48%; /* Cada sección ocupa el 48% del ancho de la columna */
     }
 
     .attend-button {
-      text-align: right; /* Cambiado a centrar */
-      margin-top: 20px; /* Ajustado el margen */
-      margin-right: 110px;
+      text-align: right;
+      margin-top: 50px;
+      margin-right: 120px;
     }
 
     summary {
@@ -80,8 +79,6 @@
     .info-section .detalle {
       margin-top: 25px;
       font-family: Verdana, Geneva, serif, sans-serif;
-      
-
     }
 
     .detalle {
@@ -91,9 +88,8 @@
 
     .comentario {
       height: 65px;
-      overflow-y:auto ; 
+      overflow-y: auto;
       font-family: monospace;
-      
     }
 
     .heart-symbol {
@@ -128,7 +124,7 @@
           <form method="post" action="{% url 'show_event' id=event.id %}">
             {% csrf_token %}
             {{ comentario_form.as_p }}
-            <button type="submit" class="btn btn-outline-primary">Enviar</button>
+            <button type="button" class="btn btn-outline-primary">Enviar</button>
           </form>
         {% else %}
           <p>Inicia sesión para agregar un comentario.</p>
@@ -154,11 +150,15 @@
           <p class="detalle">{{ event.descripcion }}</p>
         </details>
       </div>
+      <!-- Botón para asistir -->
+      <div class="attend-button">
+        <button type="button" class="btn btn-success">Asistir</button>
+      </div>
       <!-- Sección para el número y el conteo -->
       <div class="number-count-section">
         <div class="number-section">
           <p style="font-size: 35px;"> 
-            <span> {{ event.like_set.count }}
+            <span>
               <a href= "{% url 'like_event' id=event.id %}" target="_blank" rel="noopener noreferrer">
                 <span class="heart-symbol">&hearts;</span>
               </a>
@@ -169,18 +169,6 @@
           <p style="font-size: 35px;">{{event.asistencia}}/{{event.capacidad}}</p>
         </div>
       </div>
-      <!-- Botón para asistir (movido debajo del count-section) -->
-      <div class="attend-button">
-        <a href="{% url 'attend_event' id=event.id %}" class="btn btn-success">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">
-            <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
-            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/>
-            <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z"/>
-          </svg>
-          Asistir
-        </a>
-      </div>
-      
     </div>
   </div>
 
