@@ -231,11 +231,14 @@ class UserEventsView(View):
 
 @method_decorator(login_required, name='dispatch')
 class Comunidad(View):
-    template_name = 'comunidad.html'
+    template_name = 'community.html'
 
     def get(self, request):
-        user_events = Evento.objects.filter(organizador=request.user)
-        return render(request, self.template_name, {'user_events': user_events})
+        viewData = {}
+        viewData["comentarios"] = Comentario.objects.all().order_by('-fecha_creacion')
+        viewData["likes"] = Like.objects.all().order_by('-id')
+        
+        return render(request, self.template_name, viewData)
 
 
 
