@@ -2,6 +2,7 @@
 {% block title %}
     Foro de la Comunidad
 {% endblock %}
+{% block header_title %}Comunidad{% endblock %}
 {% block content %}
 
 
@@ -9,7 +10,7 @@
     <title>Foro de comentarios</title>
 
 
-
+    
     <style>
         .comment {
             margin-bottom: 20px;
@@ -39,7 +40,7 @@
             justify-content: space-between;
             flex-grow: 1;
         }
-
+    
         .comment .image-container {
             float: center;
             margin-left: 10px;
@@ -55,7 +56,7 @@
             margin-right: 80px;
 
         }
-
+    
         .comment .image {
             width: 90px; /* Ajusta el tamaño de la imagen según tus preferencias */
             height: 90px; /* Ajusta el tamaño de la imagen según tus preferencias */
@@ -66,7 +67,7 @@
         .comment .text {
             margin-top: 10px; /* Añade espacio encima del texto */
         }
-
+    
         .comment .user-info {
             display: flex;
             justify-content: space-between;
@@ -79,14 +80,14 @@
             font-style: oblique;
             font-family: fantasy;
         }
-
+    
         .comment .username {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-weight: bold;
             font-size: 1.2em; /* Ajusta el tamaño del nombre de usuario según tus preferencias */
             text-align: center;
         }
-
+    
         .heart-icon {
             color: red; /* Ajusta el color del corazón según tus preferencias */
             font-size: 100px; /* Ajusta el tamaño del corazón según tus preferencias */
@@ -98,7 +99,7 @@
 
 
     </style>
-
+    
 </head>
 
 
@@ -108,27 +109,35 @@
         <h2>Interacciones</h2>
         <div class="row">
             <div class="col-md-6">
+                {% for comentario in comentarios %}
                 <div class="comment">
                     <div class="user-info">
                         <div class="image-container">
-                            <img src="https://via.placeholder.com/150" class="image" alt="Imagen de perfil comment">
-                            <div class="text">Titulo del evento</div>
+                            <a href="{% url 'show_event' id=comentario.evento.id %}" target="_blank"><img src="{{ comentario.evento.image_url }}" class="image" alt="Imagen de perfil comment"></a>
+                            <div class="text">{{ comentario.evento.nombre }}</div>
                         </div>
                         <div>
-                            <div class="username">Saymon</div>
-                            <div class="date">Fecha: 20 de noviembre, 2023</div>
+                            <div class="username">{{ comentario.usuario.username }}</div>
+                            <div class="date">{{ comentario.fecha_creacion }}</div>
                         </div>
                     </div>
-                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit En este ejemplo, he agregado un nuevo contenedor llamado .text dentro de .image-container que contiene el texto</div>
+                    <div class="text">{{ comentario.texto }}</div>
                 </div>
-
+                {% endfor %}
+            </div>
+<!---->
+            <div class="col-md-6">
+                {% for like in likes %}
                 <div class="like">
-                    <div class="username">Drots</div>
+                    <div class="username">{{ like.usuario.username }}</div>
                     <div class="heart-icon">&hearts;</div>
-                    <a href="enlace_de_tu_imagen" class="image-evento">
-                      <img src="https://via.placeholder.com/150" alt="Imagen de perfil like" class="image">
+                    <a href="{% url 'show_event' id=like.evento.id %}" class="image-evento" target="_blank">
+                      <img src="{{ like.evento.image_url }}" alt="Imagen de perfil like" class="image">
                     </a>
+                    <br>
                 </div>
+                <br>
+                {% endfor %}
             </div>
         </div>
     </div>
