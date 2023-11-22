@@ -7,28 +7,40 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import TemplateView
 from django.views import View
-from django import forms
-from decimal import Decimal
 from .models import *
 from .forms import *
+from .recommendations.algo import do_recomendation
 
 class HomePage(TemplateView):
     template_name = 'home.html'
     def get(self, request):
-        viewData = {}
-        viewData["title"] = "Title of the view"
-        viewData["subtitle"] =  "Subtitle of the view"
-        viewData["events"] = Evento.objects.all()
-        return render(request,self.template_name,viewData)
-    
+        event_with_likes = []
+        id_name_events = []
+
+        if request.user.is_authenticated:
+            user_likes = Like.objects.filter(usuario=request.user)
+            user_likes = list(user_likes.values())
+            for liked_events in user_likes:
+                event_with_likes.append({'id':liked_events['evento_id']})
+
+            all_events = Evento.objects.all()
+            all_events = list(all_events.values())
+
+            for event in all_events:
+                id_name_events.append({'id':event['id'], 'name':event['nombre'], 'category':event['categorias']})
+
+            recomendations = do_recomendation(event_with_likes, id_name_events, True)
+            return render(request, self.template_name, recomendations)
+        else:
+            recomendations = do_recomendation(event_with_likes, id_name_events, False)
+            return render(request, self.template_name, recomendations)
 
 class EventIndexView(TemplateView):
     template_name = 'events_index.html'
 
     def get(self, request):
         viewData = {}
-        viewData["title"] = "Title of the view"
-        viewData["subtitle"] =  "Subtitle of the view"
+        viewData["subtitle"] =  "Todos los eventos"
         viewData["events"] = Evento.objects.all()
 
         return render(request, self.template_name, viewData)
@@ -42,7 +54,7 @@ class EventShowView(View):
         view_data["event"] = get_object_or_404(Evento, pk=id)
         view_data["comentario_form"] = ComentarioForm()
         view_data["comentarios"] = Comentario.objects.filter(evento=view_data["event"])
-        
+
         return render(request, self.template_name, view_data)
 
     def post(self, request, id):
@@ -59,7 +71,7 @@ class EventShowView(View):
             messages.error(request, 'Error al agregar el comentario. Por favor, verifica el formulario.')
 
         return redirect('show_event', id=id)
-    
+
 class LikeEventView(View):
     def get(self, request, id):
         evento = get_object_or_404(Evento, id=id)
@@ -79,7 +91,7 @@ class LikeEventView(View):
         evento.save()  # Guarda la actualización de la puntuación
 
         return redirect('show_event', id=id)
-    
+
 class AttendEventView(View):
     def get(self, request, id):
         evento = get_object_or_404(Evento, id=id)
@@ -106,27 +118,27 @@ class EditEventView(View):
 
     def get(self, request, id):
         evento = get_object_or_404(Evento, id=id)
-        
+
         # Verificar si el usuario actual es el organizador del evento
         if request.user != evento.organizador:
             return redirect('events_index')
-        
+
         form = EventoForm(instance=evento)
         return render(request, self.template_name, {'form': form, 'evento': evento})
 
     def post(self, request, id):
         evento = get_object_or_404(Evento, id=id)
-        
+
         # Verificar si el usuario actual es el organizador del evento
         if request.user != evento.organizador:
             return redirect('events_index')
-        
+
         form = EventoForm(request.POST, instance=evento)
         if form.is_valid():
             form.save()
             return redirect('show_event', id=evento.id)
         return render(request, self.template_name, {'form': form, 'evento': evento})
-    
+
 
 class CreateEventView(LoginRequiredMixin, View):
     template_name = 'create_event.html'
@@ -199,15 +211,16 @@ class UserEventsView(View):
     def get(self, request):
         user_events = Evento.objects.filter(organizador=request.user)
         return render(request, self.template_name, {'user_events': user_events})
-    
+
+@method_decorator(login_required, name='dispatch')
 class Comunidad(View):
     template_name = 'comunidad.html'
 
     def get(self, request):
         user_events = Evento.objects.filter(organizador=request.user)
         return render(request, self.template_name, {'user_events': user_events})
-        
-    
+
+
 
 
 

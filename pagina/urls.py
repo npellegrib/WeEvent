@@ -17,5 +17,5 @@ urlpatterns = [
     path('edit_event/<int:id>/', EditEventView.as_view(), name='edit_event'),
     path('user_events/', UserEventsView.as_view(), name='user_events'),
     path('comunidad/',Comunidad.as_view(),name='comunidad'),
-    
+
 ]
