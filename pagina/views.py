@@ -79,6 +79,26 @@ class LikeEventView(View):
         evento.save()  # Guarda la actualización de la puntuación
 
         return redirect('show_event', id=id)
+    
+class AttendEventView(View):
+    def get(self, request, id):
+        evento = get_object_or_404(Evento, id=id)
+
+        # Verifica si el usuario ya dio "Me gusta" al evento
+        attendance = Attendance.objects.filter(evento=evento, usuario=request.user).first()
+
+        if attendance:
+            # Si ya dio "Me gusta", elimina el "Me gusta"
+            attendance.delete()
+            evento.asistencia -= 1  # Resta 1 a la puntuación
+        else:
+            # Si no ha dado "Me gusta", crea el "Me gusta"
+            Attendance.objects.create(evento=evento, usuario=request.user)
+            evento.asistencia += 1  # Suma 1 a la puntuación
+
+        evento.save()  # Guarda la actualización de la puntuación
+
+        return redirect('show_event', id=id)
 
 @method_decorator(login_required, name='dispatch')
 class EditEventView(View):
@@ -106,23 +126,7 @@ class EditEventView(View):
             form.save()
             return redirect('show_event', id=evento.id)
         return render(request, self.template_name, {'form': form, 'evento': evento})
-
-# class CreateEventView(LoginRequiredMixin, View):
-#     template_name = 'create_event.html'
-#     login_url = '/login/' 
-
-#     def get(self, request):
-#         form = EventoForm()
-#         return render(request, self.template_name, {'form': form})
-
-#     def post(self, request):
-#         form = EventoForm(request.POST)
-#         if form.is_valid():
-#             evento = form.save(commit=False)
-#             evento.organizador = request.user 
-#             evento.save()
-#             return redirect('show_event', id=evento.id)
-#         return render(request, self.template_name, {'form': form})
+    
 
 class CreateEventView(LoginRequiredMixin, View):
     template_name = 'create_event.html'

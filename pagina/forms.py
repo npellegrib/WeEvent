@@ -40,6 +40,9 @@ class EventoForm(forms.ModelForm):
         self.fields['categorias'] = forms.ChoiceField(choices=self.CATEGORIES_CHOICES, required=True)
         self.fields['etiquetas'].required = False
 
+        self.fields['fechaInicio'].widget.input_type = 'date'
+        self.fields['fechaFin'].widget.input_type = 'date'
+
         self.fields['nombre'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Nombre del evento'

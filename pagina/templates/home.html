@@ -102,7 +102,7 @@
                         <div class="col">
                             <div class="card text-center event-card">
                                 <a href="{% url 'show_event' id=event.id %}">
-                                    <img class="card-img-bottom" type="button" src="{{ event.image_url }}" alt="Event Image">
+                                    <img class="card-img-bottom" type="button" src="{{ event.imagen.url }}" alt="Event Image">
                                 </a>
                                 <h4 class="card-title">{{ event.nombre }}</h4>
                             </div>
@@ -117,7 +117,7 @@
                         <div class="col">
                             <div class="card text-center event-card">
                                 <a href="{% url 'show_event' id=event.id %}">
-                                    <img class="card-img-bottom" type="button" src="{{ event.image_url }}" alt="Event Image">
+                                    <img class="card-img-bottom" type="button" src="{{ event.imagen.url }}" alt="Event Image">
                                 </a>
                                 <h4 class="card-title">{{ event.nombre }}</h4>
                             </div>

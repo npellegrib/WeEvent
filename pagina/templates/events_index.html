@@ -29,7 +29,7 @@
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="card">
                     <a href="{% url 'show_event' id=event.id %}">
-                        <img src="{{ event.image_url }}" class="card-img-top" style="height: 200px; width: 100%; object-fit: cover;" alt="Event Image">
+                        <img src="{{ event.imagen.url }}" class="card-img-top" style="height: 200px; width: 100%; object-fit: cover;" alt="Event Image">
                     </a>
                     <div class="card-body">
                         <strong class="card-title" style=" font-style: italic;  font-family: 'Times New Roman', Times, serif; font-size: 30px; ">{{ event.nombre }}</strong>

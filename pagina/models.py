@@ -54,3 +54,9 @@ class Like(models.Model):
     def __str__(self):
         return f'{self.usuario.username} le gusta {self.evento.nombre}'
 
+class Attendance(models.Model):
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.usuario.username} irá al evento {self.evento.nombre}'
