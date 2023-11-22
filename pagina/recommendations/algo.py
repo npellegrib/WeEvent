@@ -52,12 +52,11 @@ def do_recomendation(userLikedEvents: dict, allEvents: dict) -> dict:
         specificEventsMax = [evento for evento in allEvents if evento['category'] in maxAmmountCategories]
 
         # return the results
-        if len(maxAmmountCategories) == 1:
-            return sample(specificEventsMax, 4)
-        elif len(maxAmmountCategories) > 1:
-            #TODO
+        
+        if len(specificEventsMax) >= 4:
             return sample(specificEventsMax, 4)
         else:
-            return {'error':'an error has ocurred'}
+            return specificEventsMax
+
 
 # print(do_recomendation(TEST_EVENTS_LIKES, TEST_ALL_EVENTS))
