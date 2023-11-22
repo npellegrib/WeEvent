@@ -150,7 +150,7 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 
-STATIC_URL = 'pagina/static/pagina/'
+STATIC_URL = "pagina/static/pagina/"
 STATICFILES_DIRS = [BASE_DIR / "pagina/static/pagina/"]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
