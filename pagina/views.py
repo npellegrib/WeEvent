@@ -170,3 +170,18 @@ class UserEventsView(View):
     def get(self, request):
         user_events = Evento.objects.filter(organizador=request.user)
         return render(request, self.template_name, {'user_events': user_events})
+    
+class Comunidad(View):
+    template_name = 'comunidad.html'
+
+    def get(self, request):
+        user_events = Evento.objects.filter(organizador=request.user)
+        return render(request, self.template_name, {'user_events': user_events})
+        
+    
+
+
+
+
+
+

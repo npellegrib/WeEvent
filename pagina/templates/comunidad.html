@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block title %}
+    Foro de la Comunidad
+{% endblock %}
+{% block content %}
+
+
+<head>
+    <title>Foro de comentarios</title>
+
+
+    
+    <style>
+        .comment {
+            margin-bottom: 20px;
+            border: 2px solid #ccc; /* Añade un contorno de 1 píxel de ancho con color gris (#ccc) */
+            border-radius: 30px;
+            padding: 10px; /* Añade un espacio interno de 10 píxeles alrededor del contenido */
+            width: 100%; /* Haz que el div ocupe todo el ancho disponible */
+            box-sizing: border-box; /* Incluye el tamaño del borde en el ancho total del div */
+            background-color: azure;
+        }
+        .like {
+            border: 1px solid #ccc; /* Borde más pequeño */
+            border-radius: 40px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Alinea la imagen a la derecha */
+            background-color: #ffdddd;
+
+        }
+
+
+
+        .like .image-container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+    
+        .comment .image-container {
+            float: center;
+            margin-left: 10px;
+        }
+
+        .like .image {
+            width: 100px; /* Ajusta el tamaño de la imagen según tus preferencias */
+            height: 100px; /* Ajusta el tamaño de la imagen según tus preferencias */
+            object-fit: cover;
+            border: 1px solid #ccc; /* Añade un contorno alrededor de la imagen */
+            border-radius: 50%;
+            order: 2;
+            margin-right: 80px;
+
+        }
+    
+        .comment .image {
+            width: 90px; /* Ajusta el tamaño de la imagen según tus preferencias */
+            height: 90px; /* Ajusta el tamaño de la imagen según tus preferencias */
+            object-fit: cover;
+            border: 1px solid #ccc; /* Añade un contorno alrededor de la imagen */
+        }
+
+        .comment .text {
+            margin-top: 10px; /* Añade espacio encima del texto */
+        }
+    
+        .comment .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .like .username{
+            margin-right: 90px;
+            font-size: xx-large;
+            font-style: oblique;
+            font-family: fantasy;
+        }
+    
+        .comment .username {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: 1.2em; /* Ajusta el tamaño del nombre de usuario según tus preferencias */
+            text-align: center;
+        }
+    
+        .heart-icon {
+            color: red; /* Ajusta el color del corazón según tus preferencias */
+            font-size: 100px; /* Ajusta el tamaño del corazón según tus preferencias */
+            font-style: italic;
+        }
+        .image-evento{
+            margin-left: 110px;
+        }
+
+
+    </style>
+    
+</head>
+
+
+
+<body>
+    <div class="container">
+        <h2>Interacciones</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="comment">
+                    <div class="user-info">
+                        <div class="image-container">
+                            <img src="https://via.placeholder.com/150" class="image" alt="Imagen de perfil comment">
+                            <div class="text">Titulo del evento</div>
+                        </div>
+                        <div>
+                            <div class="username">Saymon</div>
+                            <div class="date">Fecha: 20 de noviembre, 2023</div>
+                        </div>
+                    </div>
+                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit En este ejemplo, he agregado un nuevo contenedor llamado .text dentro de .image-container que contiene el texto</div>
+                </div>
+
+                <div class="like">
+                    <div class="username">Drots</div>
+                    <div class="heart-icon">&hearts;</div>
+                    <a href="enlace_de_tu_imagen" class="image-evento">
+                      <img src="https://via.placeholder.com/150" alt="Imagen de perfil like" class="image">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+
+{% endblock %}

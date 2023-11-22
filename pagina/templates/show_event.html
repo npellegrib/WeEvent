@@ -1,69 +1,155 @@
 {% extends 'base.html' %}
-{% block title %} {{event.name}} info {% endblock %}
-{% block header_title %} {{subtitle}} {% endblock %}
+{% block title %}{{ event.name }} info{% endblock %}
+{% block header_title %}{{ subtitle }}{% endblock %}
 {% block content %}
-<div class="card mb-3">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="{{ event.image_url }}" class="card-img-top"  alt="Event Image">
+  <style>
 
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h4 class="card-title">
-             {{event.name}}
-          </h4>
-              <p class="card-text">Nombre: {{event.nombre}}</p>
-              <p class="card-text">Ubicacion: {{event.ubicacion}}</p>
-              <p class="card-text">Inicia: {{event.fechaInicio}}</p>
-              <p class="card-text">Termina: {{event.fechaFin}}</p>
-              <p class="card-text">Descripción: {{event.descripcion}}</p>
-              <p class="card-text">Precio: {{event.precio}}</p>
-              <p class="card-text">Capacidad: {{event.capacidad}}</p>
-              <p class="card-text">Asistencia: {{event.asistencia}}</p>
-              
-              <a class="btn bg-primary text-white" href="{% url 'events_index' %}">Go back</a>
-              <div class="card-body">
-                <h4 class="card-title">Acciones</h4>
-                {% if user.is_authenticated %}
-                    {% if user == event.organizador %}
-                        <a class="btn btn-warning" href="{% url 'edit_event' id=event.id %}">Editar</a>
-                        <a class="btn btn-danger" href="{% url 'delete_event' id=event.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar este evento?')">Eliminar</a>
-                    {% endif %}
-                {% endif %}
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">Me gusta</h4>
-                <p>{{ event.like_set.count }} personas les gusta este evento</p>
-                {% if user.is_authenticated %}
-                    <a class="btn btn-primary" href="{% url 'like_event' id=event.id %}">
-                        {% if user in event.like_set.all %}
-                            No me gusta
-                        {% else %}
-                            Me gusta
-                        {% endif %}
-                    </a>
-                {% endif %}
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">Comentarios</h4>
-                {% for comentario in comentarios %}
-                    <p>{{ comentario.usuario.username }} dijo: {{ comentario.texto }}</p>
-                {% endfor %}
-                
-                <!-- Formulario para agregar comentarios -->
-                {% if user.is_authenticated %}
-                    <form method="post" action="{% url 'show_event' id=event.id %}">
-                        {% csrf_token %}
-                        {{ comentario_form.as_p }}
-                        <button type="submit" class="btn btn-primary">Agregar Comentario</button>
-                    </form>
-                {% else %}
-                    <p>Inicia sesión para agregar un comentario.</p>
-                {% endif %}
-            </div>
+
+    .container1 {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      border: 2px solid #ccc;
+      box-shadow: 25px 15px #0833a2;
+      background-color: whitesmoke;
+    }
+
+    .column {
+      flex: 1;
+      padding: 10px;
+      margin: 5px;
+    }
+
+    .text-section {
+      border: 1px solid #ccc;
+      padding-left: 5px;
+    }
+
+    .image-column {
+      width: 20%;
+    }
+
+    .image-column img {
+      width: 100%;
+      height: auto;
+    }
+
+    .text-column {
+      width: 60%;
+      
+    }
+
+    .info-section{
+      margin-top: 90px;
+      text-align: center;
+      
+    }
+
+    .description-section{
+      margin-top: 45px;
+      text-align: center;
+
+    }
+    .number-section {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    summary {
+      font-size: x-large;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-weight: 200;
+      text-decoration: underline;
+    }
+
+    .info-section .detalle{
+      margin-top: 25px;
+      font-family: Verdana, Geneva, serif, sans-serif;
+      
+
+    }
+
+    .detalle {
+      margin-top: 25px;
+      font-family: Verdana, Geneva, serif, sans-serif;
+    }
+
+    .comentario {
+      height: 65px;
+      overflow-y:auto ; 
+      font-family: monospace;
+      
+    }
+    .heart-symbol {
+      color: red; /* Color rojo */
+      text-decoration: none; /* Eliminar subrayado en el enlace */
+    }
+
+  </style>
+
+  <title>Información del Evento</title>
+</head>
+<body>
+
+  <div class="container1">
+    <div class="column image-column">
+      <!-- Contenido de la primera columna -->
+      <img src="{{ event.image_url }}" class="img-thumbnail" alt="Event Image">
+      <br>
+      <br>
+      <br>
+      <div class="text-section">
+        <h4 class="card-title" style="border: #ccc; font-family: 'Times New Roman', Times, serif; margin-top: 20px;">Comentarios</h4>
+        <br>
+        <div class="comentario" >
+          {% for comentario in comentarios %}
+            <p>{{ comentario.usuario.username }}: {{ comentario.texto }}</p>
+          {% endfor %}
         </div>
+        
+        <!-- Formulario para agregar comentarios -->
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'show_event' id=event.id %}">
+            {% csrf_token %}
+            {{ comentario_form.as_p }}
+            <button type="button" class="btn btn-outline-primary">Enviar</button>
+          </form>
+        {% else %}
+          <p>Inicia sesión para agregar un comentario.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="column text-column">
+      <!-- Contenido de la segunda columna -->
+      <div class="info-section">
+        <details open>
+          <summary>Información del Evento</summary>
+          <p class="detalle">
+              <li>Nombre: {{ event.nombre }}</li>
+              <li>Ubicación: {{ event.ubicacion }}</li>
+              <li>Inicia: {{ event.fechaInicio }}</li>
+              <li>Termina: {{ event.fechaFin }}</li>
+          </p>
+        </details>
+      </div>
+      <div class="description-section">
+        <details open>
+          <summary>Descripción</summary>
+          <p class="detalle">{{ event.descripcion }}</p>
+        </details>
+      </div>
+      <div class="number-section">
+        <p style="font-size: 35px;">123 
+          <span>
+            <a href="https://getbootstrap.com/docs/5.2/components/buttons/" target="_blank" rel="noopener noreferrer">
+              <span class="heart-symbol">&hearts;</span>
+            </a>
+          </span>
+        </p>
       </div>
     </div>
   </div>
+
+</body>
 {% endblock %}

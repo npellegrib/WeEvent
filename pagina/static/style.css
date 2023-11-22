@@ -1,0 +1,11 @@
+.card-body {
+    text-align: center; /* Centra el contenido dentro de la tarjeta */
+}
+
+.card-buttons {
+    margin-top: 10px; /* Añade espacio entre el título y los botones */
+}
+
+.card-title {
+    margin-bottom: 0.5rem; /* Ajusta el espacio entre el título y los botones */
+}

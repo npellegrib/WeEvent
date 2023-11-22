@@ -104,5 +104,5 @@ class ComentarioForm(forms.ModelForm):
         model = Comentario
         fields = ['texto']
         widgets = {
-            'texto': forms.Textarea(attrs={'rows': 3}),
+            'texto': forms.Textarea(attrs={'rows': 1}),
         }
