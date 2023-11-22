@@ -53,7 +53,10 @@ MIDDLEWARE = [
         'corsheaders.middleware.CorsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ["*"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://weevent-production.up.railway.app",
+    # Otros orígenes permitidos
+]
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
