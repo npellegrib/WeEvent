@@ -231,7 +231,7 @@ class UserEventsView(View):
 
 @method_decorator(login_required, name='dispatch')
 class Comunidad(View):
-    template_name = 'community.html'
+    template_name = 'comunidad.html'
 
     def get(self, request):
         viewData = {}
